@@ -1,0 +1,45 @@
+---
+
+####################
+# Install basic tools
+####################
+
+- name: Install tmux
+  apt: name=tmux state=present
+  become: true
+
+- name: Install Midnight Commander
+  apt: name=mc state=present
+  become: true
+
+- name: Install telnet
+  apt: name=telnet state=present
+  become: true
+
+- name: Install wget
+  apt: name=wget state=present
+  become: true
+
+- name: Install curl
+  apt: name=curl state=present
+  become: true
+
+- name: Install Git
+  apt: name=git state=present
+  become: true
+
+- name: Install Python PIP
+  apt: name=python-pip state=present
+  become: true
+
+- name: Upgrade pip
+  apt: name=libssl-dev state=present
+  become: true
+
+- name: Install Ansible
+  pip: name=ansible state=present
+  become: true
+
+- name: Install AWS CLI
+  pip: name=awscli state=present
+  become: true

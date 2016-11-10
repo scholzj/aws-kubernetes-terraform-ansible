@@ -1,0 +1,13 @@
+---
+
+kubernetes_version: "v1.4.5"
+kubernetes_download_path: "https://storage.googleapis.com/kubernetes-release/release/{{ kubernetes_version }}/bin/linux/amd64"
+kubernetes_darwin_download_path: "https://storage.googleapis.com/kubernetes-release/release/{{ kubernetes_version }}/bin/darwin/amd64"
+
+kubernetes_api_endpoint_port: 6443
+kubernetes_cluster_name: "kubernetes-not-the-hardest-way"
+certificate_path: "{{ playbook_dir }}/../cert"
+
+# Credentials must match those defined in templates/var/lib/kubernetes/token.csv
+kubectl_user: admin
+kubectl_token: chAng3m3

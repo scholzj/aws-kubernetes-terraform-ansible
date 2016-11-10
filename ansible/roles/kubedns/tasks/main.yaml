@@ -1,0 +1,25 @@
+---
+
+####################
+# Install Kube-DNS
+####################
+
+- name: Add Kube-dns deployment configuration
+  template:
+    src: kubedns-deployment.yaml.j2
+    dest: /tmp/kubedns-deployment.yaml
+    mode: 644
+  become: true
+
+- name: Add Kube-dns service configuration
+  template:
+    src: kubedns-service.yaml.j2
+    dest: /tmp/kubedns-service.yaml
+    mode: 644
+  become: true
+
+- name: Launch kube-dns service
+  command: "kubectl create -f /tmp/kubedns-service.yaml"
+
+- name: Launch kube-dns deployment
+  command: "kubectl create -f /tmp/kubedns-deployment.yaml"

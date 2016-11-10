@@ -1,0 +1,74 @@
+---
+#############
+# Kubectl
+#############
+
+- name: Download Kubectl binaries
+  get_url:
+    url: "{{ kubernetes_darwin_download_path }}/{{ item }}"
+    dest: /usr/local/bin
+    owner: root
+    group: admin
+    mode: 0755
+    # TODO Add hash check
+  with_items:
+    - kubectl
+  when: ansible_os_family == 'Darwin'
+  become: true
+
+- name: Download Kubectl binaries
+  get_url:
+    url: "{{ kubernetes_download_path }}/{{ item }}"
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: 0755
+    # TODO Add hash check
+  with_items:
+    - kubectl
+  when: ansible_os_family != 'Darwin'
+  become: true
+
+####################
+# Load Certificates
+####################
+
+- name: Create kubernetes data dir
+  file: path=/var/lib/kubernetes state=directory
+  become: true
+
+- name: Copy certificates
+  copy:
+    src: "{{ playbook_dir }}/../cert/{{ item }}"
+    dest: /var/lib/kubernetes
+    owner: root
+    group: admin
+    mode: 0644
+  with_items:
+    - ca.pem
+  when: ansible_os_family == 'Darwin'
+  become: true
+
+- name: Copy certificates
+  copy:
+    src: "{{ playbook_dir }}/../cert/{{ item }}"
+    dest: /var/lib/kubernetes
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - ca.pem
+  when: ansible_os_family != 'Darwin'
+  become: true
+
+- name: Set kubectl endpoint
+  shell: "kubectl config set-cluster {{ kubernetes_cluster_name }} --certificate-authority=/var/lib/kubernetes/ca.pem --embed-certs=true --server=https://{{ kubernetes_api_endpoint }}:{{ kubernetes_api_endpoint_port }}"
+
+- name: Set kubectl credentials
+  shell: "kubectl config set-credentials {{ kubectl_user }} --token {{ kubectl_token }}"
+
+- name: Set kubectl default context
+  shell: "kubectl config set-context default-context --cluster={{ kubernetes_cluster_name }} --user={{ kubectl_user }}"
+
+- name: Switch kubectl to default context
+  shell: "kubectl config use-context default-context"
