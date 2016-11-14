@@ -1,0 +1,55 @@
+---
+
+####################
+# Install Heapster-Influx-Grafana
+####################
+
+- name: Add Heapster deployment configuration
+  template:
+    src: heapster-deployment.yaml.j2
+    dest: /tmp/heapster-deployment.yaml
+    mode: 644
+  become: true
+
+- name: Add Heapster service configuration
+  template:
+    src: heapster-service.yaml.j2
+    dest: /tmp/heapster-service.yaml
+    mode: 644
+  become: true
+
+- name: Add Influx service configuration
+  template:
+    src: influxdb-service.yaml.j2
+    dest: /tmp/influxdb-service.yaml
+    mode: 644
+  become: true
+
+- name: Add Grafana service configuration
+  template:
+    src: grafana-service.yaml.j2
+    dest: /tmp/grafana-service.yaml
+    mode: 644
+  become: true
+
+- name: Add Influx/Grafana controller configuration
+  template:
+    src: influxdb-grafana-controller.yaml.j2
+    dest: /tmp/influxdb-grafana-controller.yaml
+    mode: 644
+  become: true
+
+- name: Launch Heapster service
+  command: "kubectl create -f /tmp/heapster-service.yaml"
+
+- name: Launch Heapster deployment
+  command: "kubectl create -f /tmp/heapster-deployment.yaml"
+
+- name: Launch Grafana service
+  command: "kubectl create -f /tmp/grafana-service.yaml"
+
+- name: Launch InfluxDB service
+  command: "kubectl create -f /tmp/influxdb-service.yaml"
+
+- name: Launch InfluxDB / Grafana controller
+  command: "kubectl create -f /tmp/influxdb-grafana-controller.yaml"

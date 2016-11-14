@@ -9,5 +9,6 @@
 - hosts: localhost
   connection: local
   roles:
-    - kubedns
-    - kubedashboard
+    #- kubedns
+    #- kubedashboard
+    - monitoring
