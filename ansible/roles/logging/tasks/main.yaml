@@ -1,0 +1,45 @@
+---
+
+####################
+# Install Logging (fluentd, Elasticsearch, Kibana)
+####################
+
+- name: Add Elasticsearch controller configuration
+  template:
+    src: elasticsearch-controller.yaml.j2
+    dest: /tmp/elasticsearch-controller.yaml
+    mode: 644
+  become: true
+
+- name: Add Elasticsearch service configuration
+  template:
+    src: elasticsearch-service.yaml.j2
+    dest: /tmp/elasticsearch-service.yaml
+    mode: 644
+  become: true
+
+- name: Add Kibana deployment configuration
+  template:
+    src: kibana-deployment.yaml.j2
+    dest: /tmp/kibana-deployment.yaml
+    mode: 644
+  become: true
+
+- name: Add Kibana service configuration
+  template:
+    src: kibana-service.yaml.j2
+    dest: /tmp/kibana-service.yaml
+    mode: 644
+  become: true
+
+- name: Launch Elasticsearch controller
+  command: "kubectl create -f /tmp/elasticsearch-service.yaml"
+
+- name: Launch Elasticsearch deployment
+  command: "kubectl create -f /tmp/elasticsearch-controller.yaml"
+
+- name: Launch Kibana service
+  command: "kubectl create -f /tmp/kibana-service.yaml"
+
+- name: Launch Kibana deployment
+  command: "kubectl create -f /tmp/kibana-deployment.yaml"
