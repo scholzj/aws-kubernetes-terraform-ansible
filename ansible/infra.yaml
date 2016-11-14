@@ -37,3 +37,4 @@
   roles:
     - common
     - worker
+    - fluentd
