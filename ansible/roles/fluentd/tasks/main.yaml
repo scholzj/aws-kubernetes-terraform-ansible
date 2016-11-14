@@ -1,0 +1,12 @@
+---
+
+####################
+# Install Fluentd
+####################
+
+- name: Add fluent configuration
+  template:
+    src: fluentd-elasticsearch.yaml.j2
+    dest: /var/lib/kubernetes/manifests/fluentd-elasticsearch.yaml
+    mode: 644
+  become: true
