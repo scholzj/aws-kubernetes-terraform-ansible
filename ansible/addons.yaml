@@ -11,4 +11,5 @@
   roles:
     #- kubedns
     #- kubedashboard
-    - monitoring
+    #- monitoring
+    - logging
