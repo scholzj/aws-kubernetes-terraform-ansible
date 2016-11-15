@@ -19,6 +19,12 @@ resource "aws_instance" "worker" {
     vpc_security_group_ids = ["${aws_security_group.kubernetes.id}"]
     key_name = "${var.default_keypair_name}"
 
+    root_block_device   {
+        volume_size = 50
+        volume_type = "gp2"
+        delete_on_termination = true
+    }
+
     tags {
       Name = "dave-k8s-worker-${count.index}"
       Owner = "${var.owner}"
