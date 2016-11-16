@@ -5,7 +5,7 @@
 resource "aws_instance" "etcd" {
     count = 3
     ami = "${var.default_ami}"
-    instance_type = "${var.etcd_instance_type}"
+    instance_type = "${var.instance_types["etcd"]}"
 
     iam_instance_profile = "${aws_iam_instance_profile.kubernetes-etcd.id}"
 
@@ -19,10 +19,10 @@ resource "aws_instance" "etcd" {
 
     tags {
       Name = "dave-k8s-etcd-${count.index}"
-      Owner = "${var.owner}"
-      Application = "${var.application}"
-      Confidentiality = "${var.confidentality}"
-      Costcenter = "${var.costcenter}"
+      Owner = "${var.custom_tags["Owner"]}"
+      Application = "${var.custom_tags["Application"]}"
+      Confidentiality = "${var.custom_tags["Confidentiality"]}"
+      Costcenter = "${var.custom_tags["Costcenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "etcd"
       ansibleNodeName = "etcd${count.index}"

@@ -1,9 +1,9 @@
-# Outside access
+# Cluster name
 
-variable control_cidr {
-  description = "CIDR for maintenance: inbound traffic to the Jump host and to the Kubernetes API loadbalancer will be allowed from this IPs"
-  type = "list"
-  default = ["0.0.0.0/0"]
+variable cluster_name {
+  description = "Cluster name is used as a basis for naming other resources"
+  type = "string"
+  default = "my-k8s"
 }
 
 # Key
@@ -22,37 +22,25 @@ variable default_keypair_name {
 
 # Tags
 
-variable application {
-  default = "MyApp"
-  type = "string"
-  description = "Application name (tag for AWS resources created via Terraform)"
-}
+variable custom_tags {
+    description = "Different tag values which should be assigned to AWS resources created via Terraform)"
+    type = "map"
 
-variable confidentality {
-  default = "None"
-  type = "string"
-  description = "Confidentiality flag (tag for AWS resources created via Terraform)"
-}
-
-variable costcenter {
-  default = "000000"
-  type = "string"
-  description = "Const center (tag for AWS resources created via Terraform)"
-}
-
-variable owner {
-  default = "user"
-  type = "string"
-  description = "Owner name (tag for AWS resources created via Terraform)"
+    default = {
+        Application = "MyApp"
+        Confidentiality = "None"
+        CostCenter = "000000"
+        Owner = "user"
+    }
 }
 
 variable ansibleFilter {
   description = "`ansibleFilter` tag value added to all instances, to enable instance filtering in Ansible dynamic inventory"
-  default = "my-k8s" # IF YOU CHANGE THIS YOU HAVE TO CHANGE instance_filters = tag:ansibleFilter=Kubernetes01 in ./ansible/hosts/ec2.ini
+  default = "${var.cluster_name}" # IF YOU CHANGE THIS YOU HAVE TO CHANGE instance_filters = tag:ansibleFilter=Kubernetes01 in ./ansible/hosts/ec2.ini
   type = "string"
 }
 
-# Networking setup
+# AWS Regions / Zones
 
 variable region {
   default = "eu-central-1"
@@ -66,21 +54,21 @@ variable zone {
   description = "AWS AZ (Availability zone) which should be used"
 }
 
-# VPC setup
+# Resource naming
 
 variable vpc_name {
   description = "Name of the VPC"
-  default = "my-k8s"
+  default = "${var.cluster_name}"
   type = "string"
 }
 
 variable elb_name {
   description = "Name of the ELB for Kubernetes API"
-  default = "my-k8s-api"
+  default = "${var.cluster_name}-api"
   type = "string"
 }
 
-### VARIABLES BELOW MUST NOT BE CHANGED ###
+# Network details (Change this only if you know what you are doing or if you think you are lucky)
 
 variable vpc_cidr {
   default = "172.35.0.0/16"
@@ -89,21 +77,47 @@ variable vpc_cidr {
 }
 
 variable vpc_public_subnet_cidr {
-  default = "172.35.0.0/24"
+  default = "${cidrsubnet(var.vpc_cidr, 8, 0)}"
   type = "string"
   description = ""
 }
 
 variable vpc_private_subnet_cidr {
-  default = "172.35.1.0/24"
+  default = "${cidrsubnet(var.vpc_cidr, 8, 1)}"
+  type = "string"
+  description = ""
+}
+
+variable kubernetes_service_cluster_cidr {
+  default = "${cidrsubnet(var.vpc_cidr, 8, 2)}"
   type = "string"
   description = ""
 }
 
 variable kubernetes_pod_cidr {
-  default = "172.35.32.0/19"
+  default = "${cidrsubnet(var.vpc_cidr, 3, 1)}"
   type = "string"
   description = ""
+}
+
+variable kubernetes_cluster_api {
+  default = "${cidrhost(var.kubernetes_service_cluster_cidr, 1)}"
+  type = "string"
+  description = "Internal IP address of the Kubernetes API"
+}
+
+variable kubernetes_cluster_dns {
+  default = "${cidrhost(var.kubernetes_service_cluster_cidr, 10)}"
+  type = "string"
+  description = "Internal IP address of kubernetes's own DNS server"
+}
+
+# Outside access
+
+variable control_cidr {
+  description = "CIDR for maintenance: inbound traffic to the Jump host and to the Kubernetes API loadbalancer will be allowed from this IPs"
+  type = "list"
+  default = ["0.0.0.0/0"]
 }
 
 # Instances Setup
@@ -120,38 +134,14 @@ variable default_instance_user {
   type = "string"
 }
 
-variable etcd_instance_type {
-  default = "t2.small"
-  type = "string"
-  description = "Instance type for etcd hosts"
-}
+variable instance_types {
+    type = "map"
+    description = "List of instance types to be used for different hosts"
 
-variable controller_instance_type {
-  default = "t2.small"
-  type = "string"
-  description = "Instance type for controller hosts"
-}
-
-variable worker_instance_type {
-  default = "t2.small"
-  type = "string"
-  description = "Instance type for worker hosts"
-}
-
-variable jumphost_instance_type {
-  default = "t2.micro"
-  type = "string"
-  description = "Instance type for the jump host"
-}
-
-variable kubernetes_cluster_api {
-  default = "172.35.2.1"
-  type = "string"
-  description = "Internal IP address of the Kubernetes API"
-}
-
-variable kubernetes_cluster_dns {
-  default = "172.35.2.10"
-  type = "string"
-  description = "Internal IP address of kubernetes's own DNS server"
+    default = {
+        etcd = "t2.small"
+        controller = "t2.small"
+        worker = "t2.small"
+        jumphost = "t2.micro"
+    }
 }

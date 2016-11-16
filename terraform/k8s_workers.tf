@@ -6,7 +6,7 @@
 resource "aws_instance" "worker" {
     count = 3
     ami = "${var.default_ami}"
-    instance_type = "${var.worker_instance_type}"
+    instance_type = "${var.instance_types["worker"]}"
 
     iam_instance_profile = "${aws_iam_instance_profile.kubernetes-worker.id}"
 
@@ -27,10 +27,10 @@ resource "aws_instance" "worker" {
 
     tags {
       Name = "dave-k8s-worker-${count.index}"
-      Owner = "${var.owner}"
-      Application = "${var.application}"
-      Confidentiality = "${var.confidentality}"
-      Costcenter = "${var.costcenter}"
+      Owner = "${var.custom_tags["Owner"]}"
+      Application = "${var.custom_tags["Application"]}"
+      Confidentiality = "${var.custom_tags["Confidentiality"]}"
+      Costcenter = "${var.custom_tags["Costcenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "worker"
       ansibleNodeName = "worker${count.index}"

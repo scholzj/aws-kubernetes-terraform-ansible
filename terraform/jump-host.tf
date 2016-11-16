@@ -5,7 +5,7 @@
 
 resource "aws_instance" "jump" {
     ami = "${var.default_ami}"
-    instance_type = "${var.jumphost_instance_type}"
+    instance_type = "${var.instance_types["jumphost"]}"
 
     subnet_id = "${aws_subnet.jumpnet.id}"
     private_ip = "${cidrhost(var.vpc_public_subnet_cidr, 10)}"
@@ -17,10 +17,10 @@ resource "aws_instance" "jump" {
 
     tags {
       Name = "dave-k8s-jumphost-0"
-      Owner = "${var.owner}"
-      Application = "${var.application}"
-      Confidentiality = "${var.confidentality}"
-      Costcenter = "${var.costcenter}"
+      Owner = "${var.custom_tags["Owner"]}"
+      Application = "${var.custom_tags["Application"]}"
+      Confidentiality = "${var.custom_tags["Confidentiality"]}"
+      Costcenter = "${var.custom_tags["Costcenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "jumphost"
       ansibleNodeName = "jumphost0"

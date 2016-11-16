@@ -8,10 +8,10 @@ resource "aws_vpc" "kubernetes" {
 
   tags {
     Name = "${var.vpc_name}"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -22,10 +22,10 @@ resource "aws_vpc_dhcp_options" "dns_resolver" {
 
   tags {
     Name = "${var.vpc_name}"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -55,10 +55,10 @@ resource "aws_subnet" "jumpnet" {
 
   tags {
     Name = "${var.vpc_name}-jumpnet"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -70,10 +70,10 @@ resource "aws_subnet" "kubernetes" {
 
   tags {
     Name = "${var.vpc_name}-kubernetes"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -81,10 +81,10 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.kubernetes.id}"
   tags {
     Name = "${var.vpc_name}"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -114,10 +114,10 @@ resource "aws_route_table" "jumpnet" {
 
     tags {
       Name = "${var.vpc_name}-jumpnet"
-      Owner = "${var.owner}"
-      Application = "${var.application}"
-      Confidentiality = "${var.confidentality}"
-      Costcenter = "${var.costcenter}"
+      Owner = "${var.custom_tags["Owner"]}"
+      Application = "${var.custom_tags["Application"]}"
+      Confidentiality = "${var.custom_tags["Confidentiality"]}"
+      Costcenter = "${var.custom_tags["Costcenter"]}"
     }
 }
 
@@ -137,10 +137,10 @@ resource "aws_route_table" "kubernetes" {
 
     tags {
       Name = "${var.vpc_name}-kubernetes"
-      Owner = "${var.owner}"
-      Application = "${var.application}"
-      Confidentiality = "${var.confidentality}"
-      Costcenter = "${var.costcenter}"
+      Owner = "${var.custom_tags["Owner"]}"
+      Application = "${var.custom_tags["Application"]}"
+      Confidentiality = "${var.custom_tags["Confidentiality"]}"
+      Costcenter = "${var.custom_tags["Costcenter"]}"
     }
 }
 
@@ -159,10 +159,10 @@ resource "aws_security_group" "jumpnet" {
 
   tags {
     Name = "${var.vpc_name}-jumpnet"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
@@ -209,10 +209,10 @@ resource "aws_security_group" "kubernetes" {
 
   tags {
     Name = "${var.vpc_name}"
-    Owner = "${var.owner}"
-    Application = "${var.application}"
-    Confidentiality = "${var.confidentality}"
-    Costcenter = "${var.costcenter}"
+    Owner = "${var.custom_tags["Owner"]}"
+    Application = "${var.custom_tags["Application"]}"
+    Confidentiality = "${var.custom_tags["Confidentiality"]}"
+    Costcenter = "${var.custom_tags["Costcenter"]}"
   }
 }
 
