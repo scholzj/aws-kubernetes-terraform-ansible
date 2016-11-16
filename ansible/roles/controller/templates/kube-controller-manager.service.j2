@@ -13,7 +13,8 @@ ExecStart=/usr/bin/kube-controller-manager \
   --service-account-private-key-file=/var/lib/kubernetes/kubernetes-key.pem \
   --service-cluster-ip-range={{ kubernetes_service_cluster_cidr }} \
   --v=2 \
-  --cloud-provider=aws
+  --cloud-provider=aws \
+  --feature-gates=AllAlpha=true
 Restart=on-failure
 RestartSec=5
 
