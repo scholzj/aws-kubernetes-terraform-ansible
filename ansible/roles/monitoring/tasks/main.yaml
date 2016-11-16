@@ -32,6 +32,20 @@
     mode: 644
   become: true
 
+- name: Add Grafana controller volume claim
+  template:
+    src: grafana-pvc.yaml.j2
+    dest: /tmp/grafana-pvc.yaml
+    mode: 644
+  become: true
+
+- name: Add Influx controller volume claim
+  template:
+    src: influxdb-pvc.yaml.j2
+    dest: /tmp/influxdb-pvc.yaml
+    mode: 644
+  become: true
+
 - name: Add Influx/Grafana controller configuration
   template:
     src: influxdb-grafana-controller.yaml.j2
@@ -50,6 +64,12 @@
 
 - name: Launch InfluxDB service
   command: "kubectl create -f /tmp/influxdb-service.yaml"
+
+- name: Launch Grafana volume claim
+  command: "kubectl create -f /tmp/grafana-pvc.yaml"
+
+- name: Launch Influx volume claim
+  command: "kubectl create -f /tmp/influxdb-pvc.yaml"
 
 - name: Launch InfluxDB / Grafana controller
   command: "kubectl create -f /tmp/influxdb-grafana-controller.yaml"
