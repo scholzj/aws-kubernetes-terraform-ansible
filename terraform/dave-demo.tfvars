@@ -1,5 +1,3 @@
-cluster_name = "dave-k8s"
-
 region = "eu-central-1"
 zone = "eu-central-1b"
 
@@ -17,16 +15,16 @@ control_cidr = [
     "193.29.76.166/32"
 ]
 
-vpc_name = "dave_k8s"
-elb_name = "dave-k8s-kubernetes-api"
+vpc_name = "dave_demo"
+elb_name = "dave-demo-kubernetes-api"
 
-vpc_cidr = "172.35.0.0/16"
-vpc_public_subnet_cidr = "172.35.0.0/24"
-vpc_private_subnet_cidr = "172.35.1.0/24"
-kubernetes_service_cluster_cidr = "172.35.2.0/24"
-kubernetes_pod_cidr = "172.35.32.0/19"
-kubernetes_cluster_api = "172.35.2.1"
-kubernetes_cluster_dns = "172.35.2.10"
+vpc_cidr = "172.34.0.0/16"
+vpc_public_subnet_cidr = "172.34.0.0/24"
+vpc_private_subnet_cidr = "172.34.1.0/24"
+kubernetes_service_cluster_cidr = "172.34.2.0/24"
+kubernetes_pod_cidr = "172.34.32.0/19"
+kubernetes_cluster_api = "172.34.2.1"
+kubernetes_cluster_dns = "172.34.2.10"
 
 default_ami = "ami-8504fdea"
 default_instance_user = "ubuntu"
@@ -35,13 +33,11 @@ instance_types = {
   etcd = "t2.small"
   controller = "t2.small"
   worker = "t2.small"
-  jumphost = "t2.micro"
+  jumphost = "t2.nano"
 }
 
-
-
 ## Tags
-ansibleFilter = "my-k8s"
+ansibleFilter = "dave-demo"
 custom_tags = {
   Application = "DAVe"
   Confidentiality = "None"

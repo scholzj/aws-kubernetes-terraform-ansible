@@ -1,11 +1,3 @@
-# Cluster name
-
-variable cluster_name {
-  description = "Cluster name is used as a basis for naming other resources"
-  type = "string"
-  default = "my-k8s"
-}
-
 # Key
 
 variable ssh_private_key_path {
@@ -36,7 +28,7 @@ variable custom_tags {
 
 variable ansibleFilter {
   description = "`ansibleFilter` tag value added to all instances, to enable instance filtering in Ansible dynamic inventory"
-  default = "${var.cluster_name}" # IF YOU CHANGE THIS YOU HAVE TO CHANGE instance_filters = tag:ansibleFilter=Kubernetes01 in ./ansible/hosts/ec2.ini
+  default = "my-k8s" # IF YOU CHANGE THIS YOU HAVE TO CHANGE instance_filters = tag:ansibleFilter=Kubernetes01 in ./ansible/hosts/ec2.ini
   type = "string"
 }
 
@@ -58,56 +50,56 @@ variable zone {
 
 variable vpc_name {
   description = "Name of the VPC"
-  default = "${var.cluster_name}"
+  default = "my-k8s"
   type = "string"
 }
 
 variable elb_name {
   description = "Name of the ELB for Kubernetes API"
-  default = "${var.cluster_name}-api"
+  default = "my-k8s-kubernetes-api"
   type = "string"
 }
 
 # Network details (Change this only if you know what you are doing or if you think you are lucky)
 
 variable vpc_cidr {
-  default = "172.35.0.0/16"
+  default = "10.0.0.0/16"
   type = "string"
   description = ""
 }
 
 variable vpc_public_subnet_cidr {
-  default = "${cidrsubnet(var.vpc_cidr, 8, 0)}"
+  default = "10.0.0.0/24"
   type = "string"
   description = ""
 }
 
 variable vpc_private_subnet_cidr {
-  default = "${cidrsubnet(var.vpc_cidr, 8, 1)}"
+  default = "10.0.1.0/24"
   type = "string"
   description = ""
 }
 
 variable kubernetes_service_cluster_cidr {
-  default = "${cidrsubnet(var.vpc_cidr, 8, 2)}"
+  default = "10.0.2.0/24"
   type = "string"
   description = ""
 }
 
 variable kubernetes_pod_cidr {
-  default = "${cidrsubnet(var.vpc_cidr, 3, 1)}"
+  default = "10.0.32.0/19"
   type = "string"
   description = ""
 }
 
 variable kubernetes_cluster_api {
-  default = "${cidrhost(var.kubernetes_service_cluster_cidr, 1)}"
+  default = "10.0.2.1"
   type = "string"
   description = "Internal IP address of the Kubernetes API"
 }
 
 variable kubernetes_cluster_dns {
-  default = "${cidrhost(var.kubernetes_service_cluster_cidr, 10)}"
+  default = "10.0.2.10"
   type = "string"
   description = "Internal IP address of kubernetes's own DNS server"
 }
@@ -142,6 +134,6 @@ variable instance_types {
         etcd = "t2.small"
         controller = "t2.small"
         worker = "t2.small"
-        jumphost = "t2.micro"
+        jumphost = "t2.nano"
     }
 }
