@@ -11,7 +11,7 @@ resource "aws_vpc" "kubernetes" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_vpc_dhcp_options" "dns_resolver" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_subnet" "jumpnet" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -73,7 +73,7 @@ resource "aws_subnet" "kubernetes" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -84,7 +84,7 @@ resource "aws_internet_gateway" "gw" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -117,7 +117,7 @@ resource "aws_route_table" "jumpnet" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
     }
 }
 
@@ -140,7 +140,7 @@ resource "aws_route_table" "kubernetes" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
     }
 }
 
@@ -162,7 +162,7 @@ resource "aws_security_group" "jumpnet" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 
@@ -212,7 +212,7 @@ resource "aws_security_group" "kubernetes" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 

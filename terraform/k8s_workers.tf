@@ -30,7 +30,7 @@ resource "aws_instance" "worker" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "worker"
       ansibleNodeName = "worker${count.index}"

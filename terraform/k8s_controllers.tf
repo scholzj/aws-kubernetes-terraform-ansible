@@ -23,7 +23,7 @@ resource "aws_instance" "controller" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "controller"
       ansibleNodeName = "controller${count.index}"
@@ -62,7 +62,7 @@ resource "aws_elb" "kubernetes_api" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
     }
 }
 
@@ -79,7 +79,7 @@ resource "aws_security_group" "kubernetes_api" {
     Owner = "${var.custom_tags["Owner"]}"
     Application = "${var.custom_tags["Application"]}"
     Confidentiality = "${var.custom_tags["Confidentiality"]}"
-    Costcenter = "${var.custom_tags["Costcenter"]}"
+    Costcenter = "${var.custom_tags["CostCenter"]}"
   }
 }
 

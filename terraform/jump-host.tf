@@ -20,7 +20,7 @@ resource "aws_instance" "jump" {
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["Costcenter"]}"
+      Costcenter = "${var.custom_tags["CostCenter"]}"
       ansibleFilter = "${var.ansibleFilter}"
       ansibleNodeType = "jumphost"
       ansibleNodeName = "jumphost0"
