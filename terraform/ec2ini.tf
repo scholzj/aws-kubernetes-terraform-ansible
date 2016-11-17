@@ -1,13 +1,16 @@
 ###############################
-## Generate vars.yml
+## Generate ec2.ini
 ####################
 
-# Generate ../ansible/group_vars/all/vars.yml
+# Generate ../ansible/hosts/ec2.ini
 
-data "template_file" "vars_yml" {
-    template = "${file("${path.module}/template/vars.yml")}"
+data "template_file" "ec2_ini" {
+    template = "${file("${path.module}/template/ec2.ini")}"
     depends_on = ["aws_instance.etcd", "aws_instance.controller", "aws_instance.worker"]
     vars {
+      ansibleFilter = "${var.ansibleFilter}"
+      regions = "${var.region}"
+
       vpc_cidr = "${var.vpc_cidr}"
       service_cidr = "${var.kubernetes_service_cluster_cidr}"
       pod_cidr = "${var.kubernetes_pod_cidr}"
@@ -16,12 +19,12 @@ data "template_file" "vars_yml" {
     }
 }
 
-resource "null_resource" "vars_yml" {
+resource "null_resource" "ec2_ini" {
   triggers {
-    template_rendered = "${ data.template_file.vars_yml.rendered }"
+    template_rendered = "${ data.template_file.ec2_ini.rendered }"
   }
 
   provisioner "local-exec" {
-    command = "echo '${ data.template_file.vars_yml.rendered }' > ../ansible/group_vars/all/vars.yml"
+    command = "echo '${ data.template_file.ec2_ini.rendered }' > ../ansible/hosts/ec2.ini"
   }
 }

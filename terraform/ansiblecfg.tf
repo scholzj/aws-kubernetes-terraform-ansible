@@ -4,7 +4,7 @@
 
 # Generate ../ansible/ansible.cfg
 
-data "template_file" "vars_yml" {
+data "template_file" "ansible_cfg" {
     template = "${file("${path.module}/template/vars.yml")}"
     vars {
       user = "${var.default_instance_user}"
@@ -12,12 +12,12 @@ data "template_file" "vars_yml" {
     }
 }
 
-resource "null_resource" "vars_yml" {
+resource "null_resource" "ansible_cfg" {
   triggers {
-    template_rendered = "${ data.template_file.vars_yml.rendered }"
+    template_rendered = "${ data.template_file.ansible_cfg.rendered }"
   }
 
   provisioner "local-exec" {
-    command = "echo '${ data.template_file.vars_yml.rendered }' > ../ansible/group_vars/allvars.yml"
+    command = "echo '${ data.template_file.ansible_cfg.rendered }' > ../ansible/ansible.cfg"
   }
 }
