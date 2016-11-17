@@ -94,6 +94,10 @@
   file: path=/var/lib/kubelet state=directory
   become: true
 
+- name: Create Kubelet manifests directory
+  file: path=/var/lib/kubelet/manifests state=directory
+  become: true
+
 - name: Download Kubelets binaries
   get_url:
     url: "{{ kubelet_download_path}}/{{ item }}"
@@ -138,5 +142,5 @@
   become: true
   notify:
     - Reload systemd
-    - Enable kube-proxy service
-    - Restart kube-proxy service
+    - Enable kubeproxy service
+    - Restart kubeproxy service

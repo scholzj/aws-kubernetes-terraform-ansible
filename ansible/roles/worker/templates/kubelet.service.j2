@@ -22,7 +22,7 @@ ExecStart=/usr/bin/kubelet \
   --tls-private-key-file=/var/lib/kubernetes/kubernetes-key.pem \
   --v=2 \
   --cloud-provider=aws \
-  --config=/var/lib/kubernetes/manifests \
+  --config=/var/lib/kubelet/manifests \
   --image-gc-high-threshold=80 \
   --image-gc-low-threshold=60
 
