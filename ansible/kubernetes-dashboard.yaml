@@ -1,0 +1,9 @@
+---
+###########################
+# Setup Kubernetes Dashboard
+###########################
+
+- hosts: localhost
+  connection: local
+  roles:
+    - kubedashboard

@@ -1,0 +1,25 @@
+---
+
+####################
+# Install Heapster
+####################
+
+- name: Add Heapster deployment configuration
+  template:
+    src: heapster-deployment.yaml.j2
+    dest: /tmp/heapster-deployment.yaml
+    mode: 644
+  become: true
+
+- name: Add Heapster service configuration
+  template:
+    src: heapster-service.yaml.j2
+    dest: /tmp/heapster-service.yaml
+    mode: 644
+  become: true
+
+- name: Launch Heapster service
+  command: "kubectl create -f /tmp/heapster-service.yaml"
+
+- name: Launch Heapster deployment
+  command: "kubectl create -f /tmp/heapster-deployment.yaml"

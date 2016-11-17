@@ -1,0 +1,9 @@
+---
+###########################
+# Setup Kubernetes DNS
+###########################
+
+- hosts: localhost
+  connection: local
+  roles:
+    - kubedns

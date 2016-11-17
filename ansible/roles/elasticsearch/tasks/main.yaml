@@ -1,7 +1,7 @@
 ---
 
 ####################
-# Install Logging (fluentd, Elasticsearch, Kibana)
+# Install Elasticsearch
 ####################
 
 - name: Add Elasticsearch controller volume claim
@@ -25,20 +25,6 @@
     mode: 644
   become: true
 
-- name: Add Kibana deployment configuration
-  template:
-    src: kibana-deployment.yaml.j2
-    dest: /tmp/kibana-deployment.yaml
-    mode: 644
-  become: true
-
-- name: Add Kibana service configuration
-  template:
-    src: kibana-service.yaml.j2
-    dest: /tmp/kibana-service.yaml
-    mode: 644
-  become: true
-
 - name: Launch Elasticsearch volume claim
   command: "kubectl create -f /tmp/elasticsearch-pvc.yaml"
 
@@ -47,9 +33,3 @@
 
 - name: Launch Elasticsearch deployment
   command: "kubectl create -f /tmp/elasticsearch-controller.yaml"
-
-- name: Launch Kibana service
-  command: "kubectl create -f /tmp/kibana-service.yaml"
-
-- name: Launch Kibana deployment
-  command: "kubectl create -f /tmp/kibana-deployment.yaml"

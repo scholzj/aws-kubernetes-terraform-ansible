@@ -1,6 +1,6 @@
 ---
 ###########################
-# Setup Kubernetes client
+# Setup Logging (ElasticSearch + Kibana)
 ###########################
 
 # Expects `kubernetes_api_endpoint` to be defined passed in
@@ -9,7 +9,5 @@
 - hosts: localhost
   connection: local
   roles:
-    #- kubedns
-    #- kubedashboard
-    #- monitoring
-    - logging
+    - elasticsearch
+    - grafana

@@ -1,0 +1,10 @@
+---
+###########################
+# Setup monitoring (Heapster + InfluxDB + Grafana)
+###########################
+
+- hosts: localhost
+  connection: local
+  roles:
+    - heapster
+    - influxdb-grafana
