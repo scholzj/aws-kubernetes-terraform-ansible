@@ -2,8 +2,12 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: grafana-volume
+  namespace: kube-system
   annotations:
-    - volume.beta.kubernetes.io/storage-class: ssd
+    volume.beta.kubernetes.io/storage-class: ssd
+  labels:
+    k8s-app: influxGrafana
+    kubernetes.io/cluster-service: "true"
 spec:
   accessModes:
     - ReadWriteOnce
