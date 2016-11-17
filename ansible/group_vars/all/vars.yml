@@ -5,4 +5,4 @@ kubernetes_service_cluster_cidr: "172.35.2.0/24"
 kubernetes_pod_cluster_cidr: "172.35.32.0/19"
 kubernetes_cluster_dns: "172.35.2.10"
 
-kubernetes_version: "v1.4.5"
+kubernetes_version: "v1.4.6"
