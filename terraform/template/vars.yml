@@ -1,0 +1,9 @@
+---
+
+internal_cidr: "${vpc_cidr}" # Includes VPC and Kubernetes subnets
+kubernetes_service_cluster_cidr: "${service_cidr}"
+kubernetes_pod_cluster_cidr: "${pod_cidr}"
+kubernetes_cluster_dns: "${cluster_dns}"
+kubernetes_api_endpoint: "${api_endpoint}"
+
+kubernetes_version: "v1.4.6"
