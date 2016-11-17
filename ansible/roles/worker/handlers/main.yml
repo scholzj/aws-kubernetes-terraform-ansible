@@ -12,7 +12,7 @@
   command: systemctl enable kubelet
   become: true
 
-- name: Enable kube-proxy service
+- name: Enable kubeproxy service
   command: systemctl enable kube-proxy
   become: true
 
@@ -30,7 +30,7 @@
     enabled: yes
   become: true
 
-- name: Restart kube-proxy service
+- name: Restart kubeproxy service
   service:
     name: kube-proxy
     state: restarted
