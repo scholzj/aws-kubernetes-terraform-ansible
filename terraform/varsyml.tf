@@ -5,7 +5,7 @@
 # Generate ../ansible/group_vars/all/vars.yml
 
 data "template_file" "vars_yml" {
-    template = "${file("${path.module}/template/vars.yml")}"
+    template = "${file("${path.module}/template/vars.yml.tpl")}"
     vars {
       vpc_cidr = "${var.vpc_cidr}"
       service_cidr = "${var.kubernetes_service_cluster_cidr}"

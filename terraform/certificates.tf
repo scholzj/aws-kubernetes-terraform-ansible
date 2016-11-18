@@ -5,7 +5,7 @@
 # Generate Certificates
 
 data "template_file" "certificates" {
-    template = "${file("${path.module}/template/kubernetes-csr.json")}"
+    template = "${file("${path.module}/template/kubernetes-csr.json.tpl")}"
     depends_on = ["aws_elb.kubernetes_api","aws_instance.etcd","aws_instance.controller","aws_instance.worker"]
     vars {
       kubernetes_api_elb_dns_name = "${aws_elb.kubernetes_api.dns_name}"

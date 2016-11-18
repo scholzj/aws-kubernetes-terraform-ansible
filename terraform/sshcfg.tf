@@ -5,7 +5,7 @@
 # Generate ../ssh.cfg
 
 data "template_file" "ssh_cfg" {
-    template = "${file("${path.module}/template/ssh.cfg")}"
+    template = "${file("${path.module}/template/ssh.cfg.tpl")}"
     depends_on = ["aws_instance.etcd", "aws_instance.controller", "aws_instance.worker"]
     vars {
       user = "${var.default_instance_user}"

@@ -5,7 +5,7 @@
 # Generate ../ansible/ansible.cfg
 
 data "template_file" "ansible_cfg" {
-    template = "${file("${path.module}/template/ansible.cfg")}"
+    template = "${file("${path.module}/template/ansible.cfg.tpl")}"
     vars {
       user = "${var.default_instance_user}"
       ssh_cfg_path = "../ssh.cfg"
