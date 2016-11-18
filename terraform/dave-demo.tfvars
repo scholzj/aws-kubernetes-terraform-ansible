@@ -16,7 +16,7 @@ control_cidr = [
     "193.29.76.167/32"
 ]
 
-vpc_name = "dave_demo"
+vpc_name = "dave-demo"
 elb_name = "dave-demo-kubernetes-api"
 
 vpc_cidr = "172.34.0.0/16"
