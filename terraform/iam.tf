@@ -5,7 +5,7 @@
 # The following Roles and Policy are mostly for future use
 
 resource "aws_iam_role" "kubernetes-controller" {
-  name = "dave-k8s-controller"
+  name = "${var.vpc_name}-controller"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -23,7 +23,7 @@ EOF
 }
 
 resource "aws_iam_role" "kubernetes-worker" {
-  name = "dave-k8s-worker"
+  name = "${var.vpc_name}-worker"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -41,7 +41,7 @@ EOF
 }
 
 resource "aws_iam_role" "kubernetes-etcd" {
-  name = "dave-k8s-etcd"
+  name = "${var.vpc_name}-etcd"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -60,7 +60,7 @@ EOF
 
 # Role policy
 resource "aws_iam_role_policy" "kubernetes-controller" {
-  name = "dave-k8s-controller"
+  name = "${var.vpc_name}-controller"
   role = "${aws_iam_role.kubernetes-controller.id}"
   policy = <<EOF
 {
@@ -92,7 +92,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "kubernetes-worker" {
-  name = "dave-k8s-worker"
+  name = "${var.vpc_name}-worker"
   role = "${aws_iam_role.kubernetes-worker.id}"
   policy = <<EOF
 {
@@ -137,7 +137,7 @@ EOF
 }
 
 /*resource "aws_iam_role_policy" "kubernetes-etcd" {
-  name = "dave-k8s-etcd"
+  name = "${var.vpc_name}-etcd"
   role = "${aws_iam_role.kubernetes-etcd.id}"
   policy = <<EOF
 {
@@ -155,16 +155,16 @@ EOF
 
 # IAM Instance Profile for Controller
 resource  "aws_iam_instance_profile" "kubernetes-controller" {
- name = "dave-k8s-controller"
+ name = "${var.vpc_name}-controller"
  roles = ["${aws_iam_role.kubernetes-controller.name}"]
 }
 
 resource  "aws_iam_instance_profile" "kubernetes-worker" {
- name = "dave-k8s-worker"
+ name = "${var.vpc_name}-worker"
  roles = ["${aws_iam_role.kubernetes-worker.name}"]
 }
 
 resource  "aws_iam_instance_profile" "kubernetes-etcd" {
- name = "dave-k8s-etcd"
+ name = "${var.vpc_name}-etcd"
  roles = ["${aws_iam_role.kubernetes-etcd.name}"]
 }

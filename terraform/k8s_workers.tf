@@ -26,7 +26,7 @@ resource "aws_instance" "worker" {
     }
 
     tags {
-      Name = "dave-k8s-worker-${count.index}"
+      Name = "${var.vpc_name}-worker-${count.index}"
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"

@@ -19,7 +19,7 @@ resource "aws_instance" "controller" {
     key_name = "${var.default_keypair_name}"
 
     tags {
-      Name = "dave-k8s-controller-${count.index}"
+      Name = "${var.vpc_name}-controller-${count.index}"
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"

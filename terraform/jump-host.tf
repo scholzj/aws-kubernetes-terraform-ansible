@@ -16,7 +16,7 @@ resource "aws_instance" "jump" {
     key_name = "${var.default_keypair_name}"
 
     tags {
-      Name = "dave-k8s-jumphost-0"
+      Name = "${var.vpc_name}-jumphost-0"
       Owner = "${var.custom_tags["Owner"]}"
       Application = "${var.custom_tags["Application"]}"
       Confidentiality = "${var.custom_tags["Confidentiality"]}"
