@@ -12,8 +12,8 @@
 *.retry
 
 # Files which will be regularly overwritten by Terraform and their changes should be ignored
-ansible/ansible.cfg
+/ansible/ansible.cfg
 /ssh.cfg
-ansible/hosts/ec2.ini
-ansible/group_vars/all/vars.yml
-cert/kubernetes-csr.json
+/ansible/hosts/ec2.ini
+/ansible/group_vars/all/vars.yml
+/cert/kubernetes-csr.json
