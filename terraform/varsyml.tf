@@ -12,8 +12,15 @@ data "template_file" "vars_yml" {
       pod_cidr = "${var.kubernetes_pod_cidr}"
       cluster_dns = "${var.kubernetes_cluster_dns}"
       api_endpoint = "${aws_elb.kubernetes_api.dns_name}"
+      cluster_name = "${var.vpc_name}"
+
+
       aws_region = "${var.region}"
       aws_zone = "${var.zone}"
+
+      admin_password = "${var.admin_password}"
+      scheduler_password = "${var.scheduler_password}"
+      kubelet_password = "${var.kubelet_password}"
     }
 }
 

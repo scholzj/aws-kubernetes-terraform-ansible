@@ -106,3 +106,19 @@ variable instance_types {
     type = "map"
     description = "List of instance types to be used for different hosts"
 }
+
+# Passwords
+variable admin_password {
+  description = "Password for the admin user"
+  type = "string"
+}
+
+variable kubelet_password {
+  description = "Password for the admin user"
+  type = "string"
+}
+
+variable scheduler_password {
+  description = "Password for the admin user"
+  type = "string"
+}

@@ -65,10 +65,10 @@
   shell: "kubectl config set-cluster {{ kubernetes_cluster_name }} --certificate-authority=/var/lib/kubernetes/ca.pem --embed-certs=true --server=https://{{ kubernetes_api_endpoint }}:{{ kubernetes_api_endpoint_port }}"
 
 - name: Set kubectl credentials
-  shell: "kubectl config set-credentials {{ kubectl_user }} --token {{ kubectl_token }}"
+  shell: "kubectl config set-credentials {{ admin_username }} --token {{ admin_password }}"
 
 - name: Set kubectl default context
-  shell: "kubectl config set-context default-context --cluster={{ kubernetes_cluster_name }} --user={{ kubectl_user }}"
+  shell: "kubectl config set-context default-context --cluster={{ kubernetes_cluster_name }} --user={{ admin_username }}"
 
 - name: Switch kubectl to default context
   shell: "kubectl config use-context default-context"

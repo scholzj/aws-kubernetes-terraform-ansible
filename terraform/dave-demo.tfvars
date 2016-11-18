@@ -45,3 +45,8 @@ custom_tags = {
   CostCenter = "000000"
   Owner = "schojak"
 }
+
+## Passwords - CHANGE THEM!!!
+admin_password = "Chang3m3"
+scheduler_password = "Chang3m3"
+kubelet_password = "Chang3m3"

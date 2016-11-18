@@ -40,10 +40,10 @@
     - kubectl
   become: true
 
-- name: Copy Authentication and Authorisation files
-  copy:
-    src: "{{ item }}"
-    dest: /var/lib/kubernetes
+- name: Add Authentication tokens and Authorization policy file
+  template:
+    src: "{{ item }}.j2"
+    dest: /var/lib/kubernetes/{{ item }}
     owner: root
     group: root
     mode: 0644

@@ -8,7 +8,7 @@ See the project dashboard.
 
 ## Installation
 
-* Create a copy of the `example.tfvars` file and change the variables accoording to your needs
+* Create a copy of the `example.tfvars` file and change the variables according to your needs. Don't forget to change the passwords!
 * Go to the `terraform` directory and run:
 ```
 terraform apply --var-file=my-var-file.tfvars
