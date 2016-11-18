@@ -11,7 +11,7 @@ See the project dashboard.
 * Create a copy of the `example.tfvars` file and change the variables accoording to your needs
 * Go to the `terraform` directory and run:
 ```
-terraform --var-file=my-var-file.tfvars apply
+terraform apply --var-file=my-var-file.tfvars
 ```
 * After Terraform completes, move to the `ansible` directory
 * To install the Kubernetes components on the EC2 hosts, run:
