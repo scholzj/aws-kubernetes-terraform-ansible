@@ -10,4 +10,4 @@
   connection: local
   roles:
     - elasticsearch
-    - grafana
+    - kibana
