@@ -6,7 +6,6 @@
 
 data "template_file" "vars_yml" {
     template = "${file("${path.module}/template/vars.yml")}"
-    depends_on = ["aws_instance.etcd", "aws_instance.controller", "aws_instance.worker"]
     vars {
       vpc_cidr = "${var.vpc_cidr}"
       service_cidr = "${var.kubernetes_service_cluster_cidr}"
