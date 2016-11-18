@@ -4,12 +4,41 @@ This directory contains the DAVe deployment into Kubernetes cluster running on A
 
 ## TODOs
 
-* ~~Integrate with AWS cloud provider~~
-* ~~Move into private network to make sure that hosts are not accessible directly from outside~~
-* Move accross two zones to make it more HA
-* See if resources created by k8s can be automatically tagged in sync with our own requirements
-* See how persistent disk provisioning works
-* Create a cleanup procedure which would clean k8s resources (currently, kubernetes don't clean some resources such as security groups etc. That blocks terraform from deleting the VPC)
-* Bootstrap the hosts in cloud init, so that we can use auto-scale groups in amazon and not only from outside (might be complicated due to the fixed IP setup currently used)
-* Add ssh certificate validation when connecting to the remote hosts using SSH (Ansible)
-* Store Terraform state in S3
+See the project dashboard.
+
+## Installation
+
+* Create a copy of the `example.tfvars` file and change the variables accoording to your needs
+* Go to the `terraform` directory and run:
+```
+terraform --var-file=my-var-file.tfvars apply
+```
+* After Terraform completes, move to the `ansible` directory
+* To install the Kubernetes components on the EC2 hosts, run:
+```
+ansible-playbook infra.yaml
+```
+* To activate the `kubectl` command line tool on your localhost and on the jumphost, run:
+```
+ansible-playbook kubectl.yaml
+```
+* Next, install the DNS server with:
+```
+ansible-playbook kubebernetes-dns.yaml
+```
+* Install the Dashboard with:
+```
+ansible-playbook kubebernetes-dashboard.yaml
+```
+* Install the network routing with:
+```
+ansible-playbook kubebernetes-routing.yaml
+```
+* Install the Monitoring (Heapster, InfluxDB, Grafana) with:
+```
+ansible-playbook monitoring.yaml
+```
+* Install the Logging (ElasticSearch, Kibana) with:
+```
+ansible-playbook logging.yaml
+```
