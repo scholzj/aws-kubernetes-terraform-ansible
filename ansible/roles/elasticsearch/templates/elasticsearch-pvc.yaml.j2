@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: elasticsearch-volume
   annotations:
-    volume.beta.kubernetes.io/storage-class: ssd-eu-central-1b
+    volume.beta.kubernetes.io/storage-class: ssd-{{ aws_availability_zone }}
   namespace: kube-system
   labels:
     k8s-app: elasticsearch-logging

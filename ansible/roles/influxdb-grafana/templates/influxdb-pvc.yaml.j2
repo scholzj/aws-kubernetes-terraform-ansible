@@ -4,7 +4,7 @@ metadata:
   name: influxdb-volume
   namespace: kube-system
   annotations:
-    volume.beta.kubernetes.io/storage-class: ssd-eu-central-1b
+    volume.beta.kubernetes.io/storage-class: ssd-{{ aws_availability_zone }}
   labels:
     k8s-app: influxGrafana
     kubernetes.io/cluster-service: "true"

@@ -1,0 +1,8 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: ssd-{{ aws_availability_zone }}
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  zone: {{ aws_availability_zone }}
