@@ -30,15 +30,19 @@ ansible-playbook kubebernetes-dns.yaml
 ```
 ansible-playbook kubebernetes-dashboard.yaml
 ```
+* To enable automatic storage provisioning (needed by logging and monitoring in next steps), create the storage class:
+```
+ansible-playbook kubebernetes-storage.yaml
+```
 * Install the network routing with:
 ```
 ansible-playbook kubebernetes-routing.yaml
 ```
-* Install the Monitoring (Heapster, InfluxDB, Grafana) with:
+* (optional) Install the Monitoring (Heapster, InfluxDB, Grafana) with:
 ```
 ansible-playbook monitoring.yaml
 ```
-* Install the Logging (ElasticSearch, Kibana) with:
+* (optional) Install the Logging (ElasticSearch, Kibana) with:
 ```
 ansible-playbook logging.yaml
 ```
