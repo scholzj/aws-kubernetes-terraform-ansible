@@ -24,19 +24,19 @@ ansible-playbook kubectl.yaml
 ```
 * Next, install the DNS server with:
 ```
-ansible-playbook kubebernetes-dns.yaml
+ansible-playbook kubernetes-dns.yaml
 ```
 * Install the Dashboard with:
 ```
-ansible-playbook kubebernetes-dashboard.yaml
+ansible-playbook kubernetes-dashboard.yaml
 ```
 * To enable automatic storage provisioning (needed by logging and monitoring in next steps), create the storage class:
 ```
-ansible-playbook kubebernetes-storage.yaml
+ansible-playbook kubernetes-storage.yaml
 ```
 * Install the network routing with:
 ```
-ansible-playbook kubebernetes-routing.yaml
+ansible-playbook kubernetes-routing.yaml
 ```
 * (optional) Install the Monitoring (Heapster, InfluxDB, Grafana) with:
 ```
