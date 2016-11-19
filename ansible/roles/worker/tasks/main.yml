@@ -100,7 +100,7 @@
 
 - name: Download Kubelets binaries
   get_url:
-    url: "{{ kubelet_download_path}}/{{ item }}"
+    url: "{{ kubernetes_download_path }}/{{ item }}"
     dest: "/usr/bin"
     group: root
     owner: root
