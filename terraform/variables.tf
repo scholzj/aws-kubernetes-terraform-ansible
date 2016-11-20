@@ -85,8 +85,13 @@ variable kubernetes_cluster_dns {
 
 # Outside access
 
-variable control_cidr {
-  description = "CIDR for maintenance: inbound traffic to the Jump host and to the Kubernetes API loadbalancer will be allowed from this IPs"
+variable ssh_access_cidr {
+  description = "CIDR for maintenance: inbound traffic to the Jump host using SSH and other protocols for management"
+  type = "list"
+}
+
+variable api_access_cidr {
+  description = "CIDR for maintenance: inbound traffic to the Kubernetes API loadbalancer will be allowed from this IPs"
   type = "list"
 }
 

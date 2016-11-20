@@ -176,12 +176,12 @@ resource "aws_security_group_rule" "allow_all_outbound_from_jumpnet" {
 }
 
 resource "aws_security_group_rule" "allow_all_from_control_host" {
-    count = "${length(var.control_cidr)}"
+    count = "${length(var.ssh_access_cidr)}"
     type = "ingress"
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = ["${var.control_cidr[count.index]}"]
+    cidr_blocks = ["${var.ssh_access_cidr[count.index]}"]
     security_group_id = "${aws_security_group.jumpnet.id}"
 }
 

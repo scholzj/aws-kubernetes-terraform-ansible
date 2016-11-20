@@ -93,12 +93,12 @@ resource "aws_security_group_rule" "api_allow_all_outbound" {
 }
 
 resource "aws_security_group_rule" "api_allow_all_from_control_host" {
-    count = "${length(var.control_cidr)}"
+    count = "${length(var.api_access_cidr)}"
     type = "ingress"
     from_port = 6443
     to_port = 6443
     protocol = "tcp"
-    cidr_blocks = ["${var.control_cidr[count.index]}"]
+    cidr_blocks = ["${var.api_access_cidr[count.index]}"]
     security_group_id = "${aws_security_group.kubernetes_api.id}"
 }
 

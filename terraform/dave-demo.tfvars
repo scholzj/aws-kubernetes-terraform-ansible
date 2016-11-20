@@ -4,7 +4,7 @@ zone = "eu-central-1b"
 default_keypair_name = "schojak"
 ssh_private_key_path = "../schojak.pem"
 
-control_cidr = [
+ssh_access_cidr = [
     "88.208.76.87/32",
     "193.29.76.160/32",
     "193.29.76.161/32",
@@ -13,7 +13,12 @@ control_cidr = [
     "193.29.76.164/32",
     "193.29.76.165/32",
     "193.29.76.166/32",
-    "193.29.76.167/32"
+    "193.29.76.167/32",
+    "88.75.182.196/32"
+]
+
+api_access_cidr = [
+    "0.0.0.0/0"
 ]
 
 vpc_name = "dave-demo"
