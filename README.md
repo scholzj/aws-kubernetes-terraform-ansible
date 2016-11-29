@@ -46,3 +46,10 @@ ansible-playbook monitoring.yaml
 ```
 ansible-playbook logging.yaml
 ```
+
+## Storing remote state in Amazon S3
+
+The Terraform state file is important for any future updates to the Terraform managed infrastructure. You can configure Terraform to store the state remotely, for example in Amazon S3 using the `remote` option, e.g.:
+```
+terraform remote config -backend=s3 -backend-config="bucket=my-cluster-terraform-state" -backend-config="key=terraform.tfstate" -backend-config="region=eu-central-1"
+```
