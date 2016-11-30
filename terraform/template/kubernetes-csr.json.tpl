@@ -4,27 +4,7 @@
     "worker0",
     "worker1",
     "worker2",
-    "${kubernetes_cluster_dns}",
-    "${kubernetes_cluster_api}",
-    "${controller0_ip}",
-    "${controller1_ip}",
-    "${controller2_ip}",
-    "${etcd0_ip}",
-    "${etcd1_ip}",
-    "${etcd2_ip}",
-    "${worker0_ip}",
-    "${worker1_ip}",
-    "${worker2_ip}",
-    "${controller0_dns}",
-    "${controller1_dns}",
-    "${controller2_dns}",
-    "${etcd0_dns}",
-    "${etcd1_dns}",
-    "${etcd2_dns}",
-    "${worker0_dns}",
-    "${worker1_dns}",
-    "${worker2_dns}",
-    "${kubernetes_api_elb_dns_name}",
+    "*.${region}.compute.internal",
     "127.0.0.1"
   ],
   "key": {
@@ -36,7 +16,7 @@
       "C": "CZ",
       "L": "Prague",
       "O": "Deutsche Boerse Services",
-      "OU": "DAVe"
+      "OU": "Risk IT"
     }
   ]
 }
