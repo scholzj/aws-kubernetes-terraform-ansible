@@ -14,5 +14,5 @@ resource "null_resource" "ssh_key" {
 
 resource "aws_key_pair" "default_keypair" {
   key_name = "${var.default_keypair_name}"
-  public_key = "${file(\"${var.ssh_private_key_path}.pub\")}"
+  public_key = "${file("${var.ssh_private_key_path}.pub")}"
 }

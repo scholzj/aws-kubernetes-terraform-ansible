@@ -6,7 +6,6 @@
 
 data "template_file" "ec2_ini" {
     template = "${file("${path.module}/template/ec2.ini.tpl")}"
-    depends_on = ["aws_instance.etcd", "aws_instance.controller", "aws_instance.worker"]
     vars {
       ansibleFilter = "${var.ansibleFilter}"
       regions = "${var.region}"

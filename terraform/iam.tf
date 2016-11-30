@@ -22,7 +22,7 @@ resource "aws_iam_role" "jumphost" {
 EOF
 }
 
-resource "aws_iam_role" "kubernetes-controller" {
+resource "aws_iam_role" "controller" {
   name = "${var.vpc_name}-controller"
   assume_role_policy = <<EOF
 {
@@ -40,7 +40,7 @@ resource "aws_iam_role" "kubernetes-controller" {
 EOF
 }
 
-resource "aws_iam_role" "kubernetes-worker" {
+resource "aws_iam_role" "worker" {
   name = "${var.vpc_name}-worker"
   assume_role_policy = <<EOF
 {
@@ -58,7 +58,7 @@ resource "aws_iam_role" "kubernetes-worker" {
 EOF
 }
 
-resource "aws_iam_role" "kubernetes-etcd" {
+resource "aws_iam_role" "etcd" {
   name = "${var.vpc_name}-etcd"
   assume_role_policy = <<EOF
 {
@@ -99,10 +99,11 @@ resource "aws_iam_role_policy" "jumphost" {
   ]
 }
 EOF
+}
 
-resource "aws_iam_role_policy" "kubernetes-controller" {
+resource "aws_iam_role_policy" "controller" {
   name = "${var.vpc_name}-controller"
-  role = "${aws_iam_role.kubernetes-controller.id}"
+  role = "${aws_iam_role.controller.id}"
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -139,9 +140,9 @@ resource "aws_iam_role_policy" "kubernetes-controller" {
 EOF
 }
 
-resource "aws_iam_role_policy" "kubernetes-worker" {
+resource "aws_iam_role_policy" "worker" {
   name = "${var.vpc_name}-worker"
-  role = "${aws_iam_role.kubernetes-worker.id}"
+  role = "${aws_iam_role.worker.id}"
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -187,13 +188,13 @@ resource "aws_iam_role_policy" "kubernetes-worker" {
         "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
       }
     ]
-  }
+}
 EOF
 }
 
-resource "aws_iam_role_policy" "kubernetes-etcd" {
+resource "aws_iam_role_policy" "etcd" {
   name = "${var.vpc_name}-etcd"
-  role = "${aws_iam_role.kubernetes-etcd.id}"
+  role = "${aws_iam_role.etcd.id}"
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -211,7 +212,7 @@ resource "aws_iam_role_policy" "kubernetes-etcd" {
         "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
       }
     ]
-  }
+}
 EOF
 }
 
@@ -221,17 +222,17 @@ resource  "aws_iam_instance_profile" "jumphost" {
  roles = ["${aws_iam_role.jumphost.name}"]
 }
 
-resource  "aws_iam_instance_profile" "kubernetes-controller" {
+resource  "aws_iam_instance_profile" "controller" {
  name = "${var.vpc_name}-controller"
- roles = ["${aws_iam_role.kubernetes-controller.name}"]
+ roles = ["${aws_iam_role.controller.name}"]
 }
 
-resource  "aws_iam_instance_profile" "kubernetes-worker" {
+resource  "aws_iam_instance_profile" "worker" {
  name = "${var.vpc_name}-worker"
- roles = ["${aws_iam_role.kubernetes-worker.name}"]
+ roles = ["${aws_iam_role.worker.name}"]
 }
 
-resource  "aws_iam_instance_profile" "kubernetes-etcd" {
+resource  "aws_iam_instance_profile" "etcd" {
  name = "${var.vpc_name}-etcd"
- roles = ["${aws_iam_role.kubernetes-etcd.name}"]
+ roles = ["${aws_iam_role.etcd.name}"]
 }

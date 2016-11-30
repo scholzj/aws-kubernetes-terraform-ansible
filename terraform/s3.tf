@@ -20,11 +20,10 @@ resource "aws_s3_bucket" "bootstrap-bucket" {
     acl = "private"
 
     tags {
-        Name = "${var.vpc_name}"
-        Owner = "${var.owner}"
-        Application = "${var.application}"
-        Confidentiality = "${var.confidentality}"
-        Costcenter = "${var.costcenter}"
+        Owner = "${var.custom_tags["Owner"]}"
+        Application = "${var.custom_tags["Application"]}"
+        Confidentiality = "${var.custom_tags["Confidentiality"]}"
+        Costcenter = "${var.custom_tags["CostCenter"]}"
     }
 }
 
