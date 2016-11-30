@@ -7,6 +7,9 @@ kubernetes_cluster_dns: "${cluster_dns}"
 kubernetes_api_endpoint: "${api_endpoint}"
 
 kubernetes_cluster_name: "${cluster_name}"
+kubernetes_api_endpoint_port: 6443
+
+certificate_path: "{{ playbook_dir }}/cert"
 
 kubernetes_version: "v1.4.6"
 kubernetes_download_path: "https://storage.googleapis.com/kubernetes-release/release/{{ kubernetes_version }}/bin/linux/amd64"

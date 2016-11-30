@@ -24,7 +24,8 @@ ExecStart=/usr/bin/kubelet \
   --cloud-provider=aws \
   --config=/var/lib/kubelet/manifests \
   --image-gc-high-threshold=80 \
-  --image-gc-low-threshold=60
+  --image-gc-low-threshold=60 \
+  --feature-gates=AllAlpha=true
 
 Restart=on-failure
 RestartSec=5

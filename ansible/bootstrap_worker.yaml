@@ -8,5 +8,5 @@
   #connection: local
   roles:
     - common
-    - jumphost
-    - kubectl
+    - worker
+    - fluentd

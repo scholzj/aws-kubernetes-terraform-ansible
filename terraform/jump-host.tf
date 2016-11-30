@@ -27,7 +27,7 @@ resource "aws_launch_configuration" "jumphost" {
 }
 
 resource "aws_autoscaling_group" "jumphost" {
-  vpc_zone_identifier = [ "${aws_subnet.schojak.id}" ]
+  vpc_zone_identifier = [ "${aws_subnet.jumpnet.id}" ]
   name = "${var.vpc_name}-jumphost-asg"
   max_size = 1
   min_size = 1
@@ -43,23 +43,23 @@ resource "aws_autoscaling_group" "jumphost" {
         propagate_at_launch = true
       }, {
         key = "Owner"
-        value = "${var.owner}"
+        value = "${var.custom_tags["Owner"]}"
         propagate_at_launch = true
       }, {
         key = "Application"
-        value = "${var.application}"
+        value = "${var.custom_tags["Application"]}"
         propagate_at_launch = true
       }, {
         key = "Confidentiality"
-        value = "${var.confidentality}"
+        value = "${var.custom_tags["Confidentiality"]}"
         propagate_at_launch = true
       }, {
         key = "Costcenter"
-        value = "${var.costcenter}"
+        value = "${var.custom_tags["CostCenter"]}"
         propagate_at_launch = true
       }, {
         key = "ansibleFilter"
-        value = "schojak"
+        value = "${var.ansibleFilter}"
         propagate_at_launch = true
       }, {
         key = "ansibleNodeType"

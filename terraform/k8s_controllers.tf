@@ -2,32 +2,75 @@
 # K8s Control Pane instances
 ############################
 
-resource "aws_instance" "controller" {
-    count = 3
-    ami = "${var.default_ami}"
+resource "aws_launch_configuration" "controller" {
+    name_prefix = "${var.vpc_name}-controller-"
+    image_id = "${var.default_ami}"
     instance_type = "${var.instance_types["controller"]}"
 
-    iam_instance_profile = "${aws_iam_instance_profile.kubernetes-controller.id}"
+    associate_public_ip_address = true
 
-    subnet_id = "${aws_subnet.kubernetes.id}"
-    private_ip = "${cidrhost(var.vpc_private_subnet_cidr, 20 + count.index)}"
-    associate_public_ip_address = false # Instances have public, dynamic IP
-    source_dest_check = false # TODO Required??
+    iam_instance_profile = "${aws_iam_instance_profile.controller.id}"
 
-    availability_zone = "${var.zone}"
-    vpc_security_group_ids = ["${aws_security_group.kubernetes.id}"]
     key_name = "${var.default_keypair_name}"
+    security_groups = ["${aws_security_group.kubernetes.id}"]
 
-    tags {
-      Name = "${var.vpc_name}-controller-${count.index}"
-      Owner = "${var.custom_tags["Owner"]}"
-      Application = "${var.custom_tags["Application"]}"
-      Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["CostCenter"]}"
-      ansibleFilter = "${var.ansibleFilter}"
-      ansibleNodeType = "controller"
-      ansibleNodeName = "controller${count.index}"
+    user_data = "${data.template_file.controller-bootstrap-script.rendered}"
+
+    lifecycle {
+      create_before_destroy = true
     }
+
+    depends_on = [
+        "aws_s3_bucket_object.bootstrap-object"
+    ]
+}
+
+resource "aws_autoscaling_group" "controller" {
+  vpc_zone_identifier = [ "${aws_subnet.kubernetes.id}" ]
+  name = "${var.vpc_name}-controller-asg"
+  max_size = 3
+  min_size = 3
+  health_check_grace_period = 300
+  health_check_type = "EC2"
+  desired_capacity = 3
+  force_delete = false
+  launch_configuration = "${aws_launch_configuration.controller.name}"
+  load_balancers = ["${aws_elb.kubernetes_api.id}"]
+
+  tag = [{
+        key = "Name"
+        value = "${var.vpc_name}-controller"
+        propagate_at_launch = true
+      }, {
+        key = "Owner"
+        value = "${var.custom_tags["Owner"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Application"
+        value = "${var.custom_tags["Application"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Confidentiality"
+        value = "${var.custom_tags["Confidentiality"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Costcenter"
+        value = "${var.custom_tags["CostCenter"]}"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleFilter"
+        value = "${var.ansibleFilter}"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleNodeType"
+        value = "controller"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleNodeName"
+        value = "controller"
+        propagate_at_launch = true
+      }
+  ]
 }
 
 ###############################
@@ -36,7 +79,7 @@ resource "aws_instance" "controller" {
 
 resource "aws_elb" "kubernetes_api" {
     name = "${var.elb_name}"
-    instances = ["${aws_instance.controller.*.id}"]
+    #instances = ["${aws_instance.controller.*.id}"]
     subnets = ["${aws_subnet.jumpnet.id}"]
     cross_zone_load_balancing = false
 

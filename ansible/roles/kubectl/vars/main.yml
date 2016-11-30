@@ -1,8 +1,0 @@
----
-
-kubernetes_api_endpoint_port: 6443
-certificate_path: "{{ playbook_dir }}/../cert"
-
-# Credentials must match those defined in templates/var/lib/kubernetes/token.csv
-kubectl_user: admin
-kubectl_token: chAng3m3

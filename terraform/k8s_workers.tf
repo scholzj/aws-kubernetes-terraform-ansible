@@ -3,21 +3,19 @@
 # K8s Worker (aka Nodes, Minions) Instances
 ############################################
 
-resource "aws_instance" "worker" {
-    count = 3
-    ami = "${var.default_ami}"
+resource "aws_launch_configuration" "worker" {
+    name_prefix = "${var.vpc_name}-worker-"
+    image_id = "${var.default_ami}"
     instance_type = "${var.instance_types["worker"]}"
 
-    iam_instance_profile = "${aws_iam_instance_profile.kubernetes-worker.id}"
+    associate_public_ip_address = true
 
-    subnet_id = "${aws_subnet.kubernetes.id}"
-    private_ip = "${cidrhost(var.vpc_private_subnet_cidr, 30 + count.index)}"
-    associate_public_ip_address = false # Instances have public, dynamic IP
-    source_dest_check = false # TODO Required??
+    iam_instance_profile = "${aws_iam_instance_profile.worker.id}"
 
-    availability_zone = "${var.zone}"
-    vpc_security_group_ids = ["${aws_security_group.kubernetes.id}"]
     key_name = "${var.default_keypair_name}"
+    security_groups = ["${aws_security_group.kubernetes.id}"]
+
+    user_data = "${data.template_file.worker-bootstrap-script.rendered}"
 
     root_block_device   {
         volume_size = 50
@@ -25,18 +23,58 @@ resource "aws_instance" "worker" {
         delete_on_termination = true
     }
 
-    tags {
-      Name = "${var.vpc_name}-worker-${count.index}"
-      Owner = "${var.custom_tags["Owner"]}"
-      Application = "${var.custom_tags["Application"]}"
-      Confidentiality = "${var.custom_tags["Confidentiality"]}"
-      Costcenter = "${var.custom_tags["CostCenter"]}"
-      ansibleFilter = "${var.ansibleFilter}"
-      ansibleNodeType = "worker"
-      ansibleNodeName = "worker${count.index}"
+    lifecycle {
+      create_before_destroy = true
     }
+
+    depends_on = [
+        "aws_s3_bucket_object.bootstrap-object"
+    ]
 }
 
-output "kubernetes_workers_public_ip" {
-  value = "${join(",", aws_instance.worker.*.public_ip)}"
+resource "aws_autoscaling_group" "worker" {
+  vpc_zone_identifier = [ "${aws_subnet.kubernetes.id}" ]
+  name = "${var.vpc_name}-worker-asg"
+  max_size = 3
+  min_size = 3
+  health_check_grace_period = 300
+  health_check_type = "EC2"
+  desired_capacity = 3
+  force_delete = false
+  launch_configuration = "${aws_launch_configuration.worker.name}"
+
+  tag = [{
+        key = "Name"
+        value = "${var.vpc_name}-worker"
+        propagate_at_launch = true
+      }, {
+        key = "Owner"
+        value = "${var.custom_tags["Owner"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Application"
+        value = "${var.custom_tags["Application"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Confidentiality"
+        value = "${var.custom_tags["Confidentiality"]}"
+        propagate_at_launch = true
+      }, {
+        key = "Costcenter"
+        value = "${var.custom_tags["CostCenter"]}"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleFilter"
+        value = "${var.ansibleFilter}"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleNodeType"
+        value = "worker"
+        propagate_at_launch = true
+      }, {
+        key = "ansibleNodeName"
+        value = "worker"
+        propagate_at_launch = true
+      }
+  ]
 }

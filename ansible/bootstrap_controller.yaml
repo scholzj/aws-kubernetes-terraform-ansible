@@ -8,5 +8,4 @@
   #connection: local
   roles:
     - common
-    - jumphost
-    - kubectl
+    - controller
