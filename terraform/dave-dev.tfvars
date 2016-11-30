@@ -1,8 +1,8 @@
 region = "eu-central-1"
 zone = "eu-central-1b"
 
-default_keypair_name = "schojak"
-ssh_private_key_path = "../schojak.pem"
+default_keypair_name = "dave-dev"
+ssh_private_key_path = "../ansible/dave-dev-ssh"
 
 ssh_access_cidr = [
     "88.208.76.87/32",

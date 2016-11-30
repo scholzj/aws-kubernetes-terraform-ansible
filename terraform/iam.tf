@@ -4,6 +4,24 @@
 
 # The following Roles and Policy are mostly for future use
 
+resource "aws_iam_role" "jumphost" {
+  name = "${var.vpc_name}-jumphost"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role" "kubernetes-controller" {
   name = "${var.vpc_name}-controller"
   assume_role_policy = <<EOF
@@ -59,6 +77,29 @@ EOF
 }
 
 # Role policy
+resource "aws_iam_role_policy" "jumphost" {
+  name = "${var.vpc_name}-jumphost"
+  role = "${aws_iam_role.jumphost.id}"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action" : ["ec2:Describe*"],
+      "Effect": "Allow",
+      "Resource": ["*"]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "s3:GetObject"
+      ],
+      "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
+    }
+  ]
+}
+EOF
+
 resource "aws_iam_role_policy" "kubernetes-controller" {
   name = "${var.vpc_name}-controller"
   role = "${aws_iam_role.kubernetes-controller.id}"
@@ -85,6 +126,13 @@ resource "aws_iam_role_policy" "kubernetes-controller" {
       "Action": "ecr:*",
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "s3:GetObject"
+      ],
+      "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
     }
   ]
 }
@@ -100,7 +148,7 @@ resource "aws_iam_role_policy" "kubernetes-worker" {
     "Statement": [
       {
         "Effect": "Allow",
-        "Action": "ec2:Describe*",
+        "Action": "ec2:*",
         "Resource": "*"
       },
       {
@@ -130,13 +178,20 @@ resource "aws_iam_role_policy" "kubernetes-worker" {
           "ecr:BatchGetImage"
         ],
         "Resource": "*"
+      },
+      {
+        "Effect":"Allow",
+        "Action":[
+          "s3:GetObject"
+        ],
+        "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
       }
     ]
   }
 EOF
 }
 
-/*resource "aws_iam_role_policy" "kubernetes-etcd" {
+resource "aws_iam_role_policy" "kubernetes-etcd" {
   name = "${var.vpc_name}-etcd"
   role = "${aws_iam_role.kubernetes-etcd.id}"
   policy = <<EOF
@@ -147,13 +202,25 @@ EOF
         "Effect": "Allow",
         "Action": "ec2:Describe*",
         "Resource": "*"
+      },
+      {
+        "Effect":"Allow",
+        "Action":[
+          "s3:GetObject"
+        ],
+        "Resource":"arn:aws:s3:::${var.vpc_name}-bootstrap/*"
       }
     ]
   }
 EOF
-}*/
+}
 
 # IAM Instance Profile for Controller
+resource  "aws_iam_instance_profile" "jumphost" {
+ name = "${var.vpc_name}-jumphost"
+ roles = ["${aws_iam_role.jumphost.name}"]
+}
+
 resource  "aws_iam_instance_profile" "kubernetes-controller" {
  name = "${var.vpc_name}-controller"
  roles = ["${aws_iam_role.kubernetes-controller.name}"]

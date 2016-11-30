@@ -34,15 +34,6 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
   dhcp_options_id = "${aws_vpc_dhcp_options.dns_resolver.id}"
 }
 
-##########
-# Keypair
-##########
-
-#resource "aws_key_pair" "default_keypair" {
-#  key_name = "${var.default_keypair_name}"
-#  public_key = "${var.default_keypair_public_key}"
-#}
-
 ############
 ## Subnets
 ############

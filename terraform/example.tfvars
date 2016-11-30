@@ -2,7 +2,7 @@ region = "eu-central-1"
 zone = "eu-central-1b"
 
 default_keypair_name = "MyKeyPair"
-ssh_private_key_path = "/home/user/.ssh/id_aws"
+ssh_private_key_path = "../ansible/id_aws"
 
 ssh_access_cidr = [
     "0.0.0.0/0"

@@ -1,0 +1,10 @@
+---
+
+#######################
+# Bootstrap the jump host
+#######################
+
+- hosts: localhost
+  roles:
+    - common
+    - jumphost
