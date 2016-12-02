@@ -6,7 +6,7 @@
 
 - name: Copy certificates
   copy:
-    src: "{{ playbook_dir }}/../cert/{{ item }}"
+    src: "{{ certificate_path }}/{{ item }}"
     dest: "/etc/etcd/"
     owner: root
     group: root

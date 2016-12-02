@@ -39,7 +39,7 @@
 
 - name: Copy certificates
   copy:
-    src: "{{ playbook_dir }}/../cert/{{ item }}"
+    src: "{{ certificate_path }}/{{ item }}"
     dest: /var/lib/kubernetes
     owner: root
     group: admin
@@ -51,7 +51,7 @@
 
 - name: Copy certificates
   copy:
-    src: "{{ playbook_dir }}/../cert/{{ item }}"
+    src: "{{ certificate_path }}/{{ item }}"
     dest: /var/lib/kubernetes
     owner: root
     group: root
