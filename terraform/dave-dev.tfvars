@@ -35,10 +35,10 @@ default_ami = "ami-8504fdea"
 default_instance_user = "ubuntu"
 
 instance_types = {
-  etcd = "t2.small"
-  controller = "t2.small"
-  worker = "t2.small"
-  jumphost = "t2.micro"
+  etcd = "t2.nano"
+  controller = "t2.nano"
+  worker = "t2.micro"
+  jumphost = "t2.nano"
 }
 
 ## Tags
