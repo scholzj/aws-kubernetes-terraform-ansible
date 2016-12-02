@@ -33,7 +33,8 @@ destination_variable = private_ip_address
 # of using the destination_variable above. Addressing (aka ansible_ssh_host)
 # will still use destination_variable. Tags should be written as 'tag_TAGNAME'.
 #hostname_variable = tag_Name
-hostname_variable = tag_ansibleNodeName
+#hostname_variable = tag_ansibleNodeName
+hostname_variable = private_dns_name
 
 # For server inside a VPC, using DNS names may not make sense. When an instance
 # has 'subnet_id' set, this variable is used. If the subnet is public, setting
