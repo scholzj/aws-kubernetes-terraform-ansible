@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get -y install python-pip
+apt-get update && apt-get -y install python-pip awscli unzip
 pip install ansible
 mkdir /var/lib/bootstrap
 aws s3 cp s3://${s3_bucket}/${s3_object} /var/lib/bootstrap/bootstrap.zip --region ${region}
