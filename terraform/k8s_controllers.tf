@@ -7,7 +7,7 @@ resource "aws_launch_configuration" "controller" {
     image_id = "${var.default_ami}"
     instance_type = "${var.instance_types["controller"]}"
 
-    associate_public_ip_address = true
+    associate_public_ip_address = false
 
     iam_instance_profile = "${aws_iam_instance_profile.controller.id}"
 

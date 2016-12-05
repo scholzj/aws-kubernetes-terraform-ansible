@@ -8,7 +8,7 @@ resource "aws_launch_configuration" "worker" {
     image_id = "${var.default_ami}"
     instance_type = "${var.instance_types["worker"]}"
 
-    associate_public_ip_address = true
+    associate_public_ip_address = false
 
     iam_instance_profile = "${aws_iam_instance_profile.worker.id}"
 
