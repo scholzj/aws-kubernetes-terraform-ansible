@@ -5,6 +5,11 @@ variable ssh_private_key_path {
   description = "Path where the private key for SSH is stored"
 }
 
+variable ssh_public_key_path {
+  type = "string"
+  description = "Path where the public key for SSH is stored"
+}
+
 variable default_keypair_name {
   type = "string"
   description = "Name of the keypair which should be used for the hosts (Must already exist in AWS)"

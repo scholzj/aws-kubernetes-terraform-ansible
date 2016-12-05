@@ -3,6 +3,7 @@ zone = "eu-central-1b"
 
 default_keypair_name = "dave-demo"
 ssh_private_key_path = "../ansible/dave-demo-ssh"
+ssh_public_key_path = "../ansible/dave-demo-ssh.pub"
 
 ssh_access_cidr = [
     "88.208.76.87/32",

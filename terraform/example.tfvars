@@ -3,6 +3,7 @@ zone = "eu-central-1b"
 
 default_keypair_name = "MyKeyPair"
 ssh_private_key_path = "../ansible/id_aws"
+ssh_public_key_path = "../ansible/id_aws.pub"
 
 ssh_access_cidr = [
     "0.0.0.0/0"
