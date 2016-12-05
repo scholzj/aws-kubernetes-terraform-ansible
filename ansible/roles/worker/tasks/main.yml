@@ -25,6 +25,10 @@
 # Docker
 #########
 
+- name: Install AUFS driver
+  apt: name="linux-image-extra-{{ ansible_kernel }}" state=present
+  become: true
+
 - name: Download docker binaries
   get_url:
     url: "{{ docker_download_url }}"
