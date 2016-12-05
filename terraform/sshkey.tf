@@ -2,11 +2,11 @@
 # Generating new SSH keypair
 ##########
 
-resource "null_resource" "ssh_key" {
-  provisioner "local-exec" {
-    command = "ssh-keygen -t rsa -P '' -f ${var.ssh_private_key_path}"
-  }
-}
+// resource "null_resource" "ssh_key" {
+//   provisioner "local-exec" {
+//     command = "ssh-keygen -t rsa -P '' -f ${var.ssh_private_key_path}"
+//   }
+// }
 
 ##########
 # Keypair
