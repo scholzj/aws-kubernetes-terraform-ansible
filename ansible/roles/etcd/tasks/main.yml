@@ -78,5 +78,5 @@
   shell: etcdctl --ca-file=/etc/etcd/ca.pem cluster-health
   register: cmd_result
   until: cmd_result.stdout.find("cluster is healthy") != -1
-  retries: 5
-  delay: 5
+  retries: 10
+  delay: 10

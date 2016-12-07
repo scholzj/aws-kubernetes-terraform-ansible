@@ -5,7 +5,7 @@
 ####################
 
 # Set hostname to internal DNS FQN. Default name is not fully qualified.
-# As nodes register themselves using hostname, if not FQN other nodes will not be able to resolve it. 
+# As nodes register themselves using hostname, if not FQN other nodes will not be able to resolve it.
 
 - name: Add internal DNS name to hosts file
   lineinfile:

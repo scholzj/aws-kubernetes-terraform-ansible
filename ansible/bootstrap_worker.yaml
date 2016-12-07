@@ -4,8 +4,10 @@
 # Bootstrap the jump host
 #######################
 
-- hosts: localhost
-  connection: local
+- hosts: all
+  gather_facts: true
+
+- hosts: "{{ this_host }}"
   roles:
     - common
     - worker

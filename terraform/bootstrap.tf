@@ -8,6 +8,7 @@ data "template_file" "jumphost-bootstrap-script" {
       region = "${var.region}"
       s3_bucket = "${var.vpc_name}-bootstrap"
       s3_object = "bootstrap.zip"
+      ssh_private_key = "${var.ssh_private_key_path}"
     }
 }
 
@@ -17,6 +18,7 @@ data "template_file" "etcd-bootstrap-script" {
       region = "${var.region}"
       s3_bucket = "${var.vpc_name}-bootstrap"
       s3_object = "bootstrap.zip"
+      ssh_private_key = "${var.ssh_private_key_path}"
     }
 }
 
@@ -26,6 +28,7 @@ data "template_file" "controller-bootstrap-script" {
       region = "${var.region}"
       s3_bucket = "${var.vpc_name}-bootstrap"
       s3_object = "bootstrap.zip"
+      ssh_private_key = "${var.ssh_private_key_path}"
     }
 }
 
@@ -35,5 +38,6 @@ data "template_file" "worker-bootstrap-script" {
       region = "${var.region}"
       s3_bucket = "${var.vpc_name}-bootstrap"
       s3_object = "bootstrap.zip"
+      ssh_private_key = "${var.ssh_private_key_path}"
     }
 }
